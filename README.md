@@ -7,10 +7,10 @@
 The game players are human and AIs.
 The list is on `players.yml` which is read from `main.rb`.
 
-プライヤーの情報は `name` フィールドと `class` フィールドを持った要素のリストです. これは `name.rb` のなかに `class` クラスがあることを言っています.
+プライヤーの情報は `name` フィールドと `class` フィールドを持った要素のリストです. これは players/`name`.rb のなかに `class` クラスがあることを言っています.
 
 The list is a array of elements each has `name` field and `class` field.
-This says `name.rb` has `class` class.
+This says players/`name`.rb has `class` class.
 
 For example,
 
@@ -19,7 +19,11 @@ For example,
   class: RandomAI
 ```
 
-calls `RandomAI` class in `random.rb`.
+says that there is  `RandomAI` class for an game AI written in `random.rb`.
+
+[*] Human (`players/human.rb`)
+[*] RandomAI (`players/random.rb`)
+[ ] Q-learning
 
 ### AI framework
 

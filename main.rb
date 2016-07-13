@@ -5,7 +5,7 @@ players = YAML.load_file('./players.yml')
 
 for player in players do
   next if player == 'human'
-  require "./#{player["name"]}.rb"
+  require "./players/#{player["name"]}.rb"
 end
 
 # choose two-players
