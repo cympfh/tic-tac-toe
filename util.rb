@@ -70,33 +70,41 @@ module Util
 
     for i in 0..2
       n = 0
+      m = 0
       for j in 0..2
         n += 1 if field[i][j] != color
+        m += 1 if field[i][j] != 0
       end
-      count += 1 if n == 2
+      count += 1 if n == 2 and m == 1
     end
 
     for j in 0..2
       n = 0
+      m = 0
       for i in 0..2
         n += 1 if field[i][j] != color
+        m += 1 if field[i][j] != 0
       end
-      count += 1 if n == 2
+      count += 1 if n == 2 and m == 1
     end
 
     n = 0
+    m = 0
     for i in 0..2
       n += 1 if field[i][i] != color
+      m += 1 if field[i][j] != 0
     end
-    count += 1 if n == 2
+    count += 1 if n == 2 and m == 1
 
     n = 0
+    m = 0
     for i in 0..2
       n += 1 if field[i][2-i] != color
+      m += 1 if field[i][j] != 0
     end
-    count += 1 if n == 2
+    count += 1 if n == 2 and m == 1
 
-    return n
+    return count
   end
 
 end

@@ -3,23 +3,23 @@
 ## Usage
 
 ```bash
-   ruby ./main.rb --silent --left random --right q --iteration 20000 >result.txt
+   ruby ./main.rb --silent --left random --right q --iteration 2000 >result.txt
    head result.txt
 Left: RandomAI
 Right: Q
 Game #0:
-= Right won after 8 turns!
+= Left won after 5 turns!
 Game #1:
-= Left won after 9 turns!
+= Draw after 9 turns
 Game #2:
-= Right won after 6 turns!
-Game #3:
 = Left won after 9 turns!
+Game #3:
+= Left won after 7 turns!
 
-   cat result.txt | grep ^= | awk '$0=$2' | tail -n 2000 | sort | uniq -c
- 846 Draw
- 376 Left
- 778 Right
+   cat result.txt | grep ^= | awk '$0=$2' | sort | uniq -c
+ 786 Draw
+ 429 Left
+ 785 Right
 ```
 
 My `q` AI is about 2x stronger than `random` AI.
