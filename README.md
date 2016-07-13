@@ -1,30 +1,51 @@
 # tic-tac-toe
 
+## Usage
+
+```bash
+   ruby ./main.rb --silent --left random --right q --iteration 20000 >result.txt
+   head result.txt
+Left: RandomAI
+Right: Q
+Game #0:
+= Right won after 8 turns!
+Game #1:
+= Left won after 9 turns!
+Game #2:
+= Right won after 6 turns!
+Game #3:
+= Left won after 9 turns!
+
+   cat result.txt | grep ^= | awk '$0=$2' | tail -n 2000 | sort | uniq -c
+ 846 Draw
+ 376 Left
+ 778 Right
+```
+
+My `q` AI is about 2x stronger than `random` AI.
+
 ## players
 
-プレイヤーに関する情報はすべて `players.yml` に書かれ、`main.rb` から利用されます.
-
-The game players are human and AIs.
-The list is on `players.yml` which is read from `main.rb`.
-
-プライヤーの情報は `name` フィールドと `class` フィールドを持った要素のリストです. これは players/`name`.rb のなかに `class` クラスがあることを言っています.
-
-The list is a array of elements each has `name` field and `class` field.
-This says players/`name`.rb has `class` class.
-
-For example,
+`cat players.yml`
 
 ```yaml
-- name: random
-  class: RandomAI
+human: Human
+random: RandomAI
+q: Q
 ```
+
+This says that 3 players are registered.
+"human", "random" and "q" are the names of players.
+And "Human", "RandomAI" and "Q" are the classes.
+The class "Human" is denoted in "players/human.rb".
+Please see `players/`.
 
 says that there is  `RandomAI` class for an game AI written in `random.rb`.
 
 - [x] Human (`players/human.rb`)
 - [x] RandomAI (`players/random.rb`)
 - [ ] Markov Decision Process
-- [ ] Q-learning
+- [*] Q-learning
 
 ### AI framework
 
@@ -63,5 +84,4 @@ The initial state is repeat of `0`.
 
 The left fills a `0` cell with color `1`.
 The right fills a `0` cell with color `2`.
-
 
