@@ -21,9 +21,10 @@ For example,
 
 says that there is  `RandomAI` class for an game AI written in `random.rb`.
 
-[*] Human (`players/human.rb`)
-[*] RandomAI (`players/random.rb`)
-[ ] Q-learning
+- [*] Human (`players/human.rb`)
+- [*] RandomAI (`players/random.rb`)
+- [ ] Markov Decision Process
+- [ ] Q-learning
 
 ### AI framework
 
