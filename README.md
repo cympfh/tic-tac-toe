@@ -61,7 +61,7 @@ The initial state is repeat of `0`.
  [0, 0, 0]]
 ```
 
-The left color a `0` cell with `1`.
-The right color a `0` cell with `2`.
+The left fills a `0` cell with color `1`.
+The right fills a `0` cell with color `2`.
 
 
