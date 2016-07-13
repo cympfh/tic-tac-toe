@@ -7,9 +7,9 @@
 ```
 
 The left (1st) player is `random` (players/random.rb),
-and the right (2nd) player is `q`.
+and the right (2nd) player is `q` (players/q.rb).
 `random` plays randomly.
-`q` plays randomly but can learn along a reward.
+`q` also plays randomly but learns good ways along a reward.
 
 ```bash
    head result.txt
