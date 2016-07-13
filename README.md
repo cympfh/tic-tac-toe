@@ -45,7 +45,7 @@ says that there is  `RandomAI` class for an game AI written in `random.rb`.
 - [x] Human (`players/human.rb`)
 - [x] RandomAI (`players/random.rb`)
 - [ ] Markov Decision Process
-- [*] Q-learning
+- [x] Q-learning
 
 ### AI framework
 
