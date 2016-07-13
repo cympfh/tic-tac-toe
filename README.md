@@ -24,6 +24,17 @@ Game #3:
 
 My `q` AI is about 2x stronger than `random` AI.
 
+When `q <=> random`:
+
+```
+   ruby ./main.rb --silent --left q --right random --iteration 2000 | grep ^= | awk '$0=$2' | sort | uniq -c
+  173 Draw
+ 1520 Left
+  307 Right
+```
+
+`q` is 5x stronger!
+
 ## players
 
 `cat players.yml`
