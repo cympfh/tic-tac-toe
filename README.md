@@ -4,6 +4,14 @@
 
 ```bash
    ruby ./main.rb --silent --left random --right q --iteration 2000 >result.txt
+```
+
+The left (1st) player is `random` (players/random.rb),
+and the right (2nd) player is `q`.
+`random` plays randomly.
+`q` plays randomly but can learn along a reward.
+
+```bash
    head result.txt
 Left: RandomAI
 Right: Q
