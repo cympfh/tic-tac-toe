@@ -1,0 +1,4 @@
+- name: human
+  class: Human
+- name: random
+  class: RandomAI
