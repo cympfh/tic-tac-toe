@@ -3,9 +3,13 @@ require './util.rb'
 class Game
 
     def initialize(left, right, verbose=false)
-        @field = (1..3).map{|| [0]*3}
         @left = left.new(verbose)
         @right = right.new(verbose)
+        reset
+    end
+
+    def reset
+        @field = (1..3).map{|| [0]*3}
         @current = 1
         @left.reset
         @right.reset

@@ -38,10 +38,11 @@ right = Module.const_get(players[args[:right]])
 puts "Left: #{left}\nRight: #{right}"
 
 # game init & run
+game = Game.new(left, right, args[:verbose])
 args[:iteration].times {|_|
     count = 0
     cond = 0
-    game = Game.new(left, right, args[:verbose])
+    game.reset
 
     puts "Game ##{_}:"
     game.display if not args[:silent]

@@ -30,18 +30,18 @@ tic-tac-toe is a game in which the left is priority to the right and
 the game result must be draw if the 2 players are enough wise.
 
 ```bash
-   ./main.rb --left random --right q -s -i 2000 | grep ^= | awk '$0=$2' | sort | uniq -c
-765 Draw
+./main.rb --left random --right q -s -i 2000 | grep ^= | awk '$0=$2' | sort | uniq -c
+737 Draw
 374 Left
-861 Right
+889 Right
 
-   ./main.rb --left q --right random -s -i 2000 | grep ^= | awk '$0=$2' | sort | uniq -c
- 186 Draw
-1761 Left
-  53 Right
+./main.rb --left q --right random -s -i 2000 | grep ^= | awk '$0=$2' | sort | uniq -c
+ 191 Draw
+1762 Left
+  47 Right
 ```
 
-To `random`, `q` is 2x stronger when it is right, and is 30x stronger when it is left.
+To `random`, `q` is 2x stronger when it is right, and is 40x stronger when it is left.
 
 ## players
 
