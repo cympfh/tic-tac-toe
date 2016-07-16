@@ -2,12 +2,12 @@
 
 ## players
 
-- [x] `human` (`players/human.rb`)
+- [x] `human` (players/human.rb)
     - user interface
-- [x] `random` (`players/random.rb`)
+- [x] `random` (players/random.rb)
     - randomly selects a empty cell
 - [ ] Markov Decision Process
-- [x] `q`
+- [x] `q` (players/q.rb)
     - initially randomly selects and learning (Q-learning)
     - the reward offered only by win or loss
 
@@ -37,26 +37,30 @@ Then i want to check how `q` (Q-learning AI) is wise than `random`.
    ./main.rb --left random --right q -i 4000 -s | sort | uniq -c
 Left: random
 Right: q
- 652 Draw
- 409 Left won
-2939 Right won
+1129 Draw
+ 875 Left won
+1996 Right won
 
    ./main.rb --left q --right random -i 4000 -s | sort | uniq -c
 Left: q
 Right: random
- 128 Draw
-3872 Left won
+ 678 Draw
+2970 Left won
+ 352 Right won
 ```
 
 `q` seems enough wise than `random`.
 
 ### q vs q
 
-```
+```bash
 ./main.rb --left q --right q -i 10000 -s
 ```
 
 ![](resources/q-vs-q.png)
+
+Initially, left is twice stronger, since the both are almost random.
+On learning, the ratios of each winning are decreasing and the ratio of draw is increasing.
 
 ## players
 
