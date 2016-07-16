@@ -23,25 +23,25 @@ Game #2:
 = Left won after 9 turns!
 Game #3:
 = Left won after 7 turns!
-
-   cat result.txt | grep ^= | awk '$0=$2' | sort | uniq -c
- 786 Draw
- 429 Left
- 785 Right
 ```
 
-My `q` AI is about 2x stronger than `random` AI.
+In general,
+tic-tac-toe is a game in which the left is priority to the right and
+the game result must be draw if the 2 players are enough wise.
 
-When `q <=> random`:
+```bash
+   ./main.rb --left random --right q -s -i 2000 | grep ^= | awk '$0=$2' | sort | uniq -c
+765 Draw
+374 Left
+861 Right
 
+   ./main.rb --left q --right random -s -i 2000 | grep ^= | awk '$0=$2' | sort | uniq -c
+ 186 Draw
+1761 Left
+  53 Right
 ```
-   ruby ./main.rb --silent --left q --right random --iteration 2000 | grep ^= | awk '$0=$2' | sort | uniq -c
-  173 Draw
- 1520 Left
-  307 Right
-```
 
-`q` is 5x stronger!
+To `random`, `q` is 2x stronger when it is right, and is 30x stronger when it is left.
 
 ## players
 
