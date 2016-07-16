@@ -4,40 +4,60 @@ def deep_copy(obj)
     Marshal.load(Marshal.dump(obj))
 end
 
-def reward(color, fs, verbose)
+def to_key(field)
 
-    field = deep_copy(fs)
+    k1 = field.reduce(0){|ac, row|
+        ac * 81 + row.reduce{|x,y| x*3 + y}
+    }
 
-    # i won in this field?
-    if Util.end?(field) == color
-        if verbose
-            puts "I winning"
-        end
-        return 100
-    end
+    k2 = field.reduce(0){|ac, row|
+        ac * 81 + row.reverse.reduce{|x,y| x*3 + y}
+    }
 
-    # i lost in any next field?
+    k3 = field.reverse.reduce(0){|ac, row|
+        ac * 81 + row.reduce{|x,y| x*3 + y}
+    }
+
+    k4 = field.reverse.reduce(0){|ac, row|
+        ac * 81 + row.reverse.reduce{|x,y| x*3 + y}
+    }
+
+    [k1, k2, k3, k4].min
+end
+
+def next_fields(color, field)
+    ret = []
     for i in 0..2
         for j in 0..2
             next if field[i][j] != 0
-            field[i][j] = 3 - color
-            if Util.end?(field) == 3 - color
-                if verbose
-                    puts "I lost by #{i},#{j}"
-                end
-                return -100
-            end
-            field[i][j] = 0
+            f = deep_copy(field)
+            f[i][j] = color
+            ret << [i, j, f]
+        end
+    end
+    return ret
+end
+
+def reward(color, field)
+    # i won in this field?
+    if Util.end?(field) == color
+        return 3
+    end
+
+    # i lost in any opponent hand
+    for _, _, f in next_fields(3 - color, field)
+        if Util.end?(f) == 3 - color
+            return -3
         end
     end
 
-    return 0
+    return 5
 end
 
-def init_table(table, field)
+def init_table(table, key)
     # initial if not contains
-    return if table[field]
-    table[field] = (1..3).map{|| [2]*3}
+    return if table[key]
+    table[key] = (1..3).map{|| [0] * 3}
 end
 
 class Q
@@ -46,64 +66,66 @@ class Q
         # @table is Q-function
         # @table[field][i][j] = Q-value of (i, j) in the field
         @table = {}
-        @alpha = 0.1
         @verbose = verbose
+        reset
     end
 
     def reset
+        @alpha = 0.2
+        @gamma = 0.9
     end
 
     def run(color, field)
-        candidates = []  # 0-cells
-        for i in 0..2
-            for j in 0..2
-                candidates << [i, j] if field[i][j] == 0
-            end
-        end
-        m = candidates.size
+
+        @alpha *= 0.9
+        key = to_key(field)
+        init_table(@table, key)
+        candidates = []
 
         # Q update
-        init_table(@table, field)
-        fs = deep_copy(field)
-        for i, j in candidates
-            if @verbose
-                puts "I thinking about #{i},#{j}"
-            end
-            fs[i][j] = color
-            init_table(@table, fs)
+        for i, j, f in next_fields(color, field)
+            candidates << [i, j]
 
-            maxq = -1000
-            for i2 in 0..2
-                for j2 in 0..2
-                    maxq = [maxq, @table[fs][i2][j2]].max
+            avgq = 0.0
+            n = 0
+            for _, _, f2 in next_fields(3 - color, f)
+                key2 = to_key(f2)
+                next if @table[key2] == nil
+                for i3 in 0..2
+                    for j3 in 0..2
+                        avgq += @table[key2][i3][j3]
+                        n += 1
+                    end
                 end
             end
-            r = reward(color, fs, @verbose)
-            @table[field][i][j] = (1 - @alpha) * @table[field][i][j] + @alpha * (r + maxq)
+            avgq /= n
+            avgq = 0.0 if n == 0
 
-            fs[i][j] = 0
+            @table[key][i][j] *= (1 - @alpha)
+            @table[key][i][j] += @alpha * reward(color, f)
+            @table[key][i][j] += @alpha * @gamma * avgq
         end
+        # p ["update", key, @table[key]]
 
         # choice
-        z = 0.0
-        zs = [0.0] * m
-        for k in 0...m
-            i, j = candidates[k]
-            zs[k] = [Math.exp(@table[field][i][j]), 0.01].max
-            z += zs[k]
+        z_sum = 0.0
+        z = {}
+        for i, j in candidates
+            z[[i, j]] = [Math.exp(@table[key][i][j]), 1/candidates.size].max
+            z_sum += z[[i, j]]
         end
 
-        for k in 0...m
-            i, j = candidates[k]
-            if @verbose
-                puts "the goodness (probability) for #{i},#{j} is #{zs[k]/z}"
+        if @verbose
+            puts "the goodness (probability)"
+            for i, j in candidates
+                q = z[[i, j]] / z_sum
+                puts "[#{i}][#{j}] = #{q} (#{z[[i, j]]})"
             end
         end
 
         q = rand
-        for k in 0...m
-            i, j = candidates[k]
-            q = q - zs[k] / z
+        for i, j in candidates
+            q = q - z[[i, j]] / z_sum
             return [i, j] if q < 0
         end
 

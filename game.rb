@@ -17,9 +17,9 @@ class Game
 
     def turn
         if @current == 1 then
-            i, j = @left.run 1, @field
+            i, j = @left.run @current, @field
         else
-            i, j = @right.run 1, @field
+            i, j = @right.run @current, @field
         end
         if @field[i][j] == 0
             @field[i][j] = @current

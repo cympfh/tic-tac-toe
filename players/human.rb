@@ -1,10 +1,10 @@
 class Human
 
     def initialize(verbose=false)
+        puts "human: type a command to put a cell from STDIN. The command is such like a0 or c2)"
     end
 
     def reset
-        puts "(Human: specify a cell with a command from STDIN. The command is such like a0 or c2)"
     end
 
     def run(color, field)

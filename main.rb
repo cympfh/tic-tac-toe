@@ -35,7 +35,7 @@ end
 left = Module.const_get(players[args[:left]])
 right = Module.const_get(players[args[:right]])
 
-puts "Left: #{left}\nRight: #{right}"
+STDERR.print "Left: #{args[:left]}\nRight: #{args[:right]}\n"
 
 # game init & run
 game = Game.new(left, right, args[:verbose])
@@ -44,7 +44,6 @@ args[:iteration].times {|_|
     cond = 0
     game.reset
 
-    puts "Game ##{_}:"
     game.display if not args[:silent]
     while cond == 0
         count += 1
@@ -56,8 +55,8 @@ args[:iteration].times {|_|
     end
 
     if cond == -1
-        puts "= Draw after #{count} turns"
+        puts "Draw"
     else
-        puts "= #{cond == 1 ? "Left" : "Right"} won after #{count} turns!"
+        puts "#{cond == 1 ? "Left" : "Right"} won"
     end
 }
